@@ -1,6 +1,7 @@
 export { NameInput } from './NameInput'
 export { Item } from './Item'
 export { SelectWrapper } from './SelectWrapper'
+export { ClickableWrapper } from './ClickableWrapper'
 export { Header } from './Header'
 export { ProductsView } from './ProductsView'
 export { RecipesView } from './RecipesView'

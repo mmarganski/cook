@@ -7,22 +7,22 @@ type RecipesViewProps = {
     recipes: any
 }
 
-export const RecipesView = (props: RecipesViewProps) => {
-    window.localStorage.setItem('recipes', JSON.stringify(props.recipes))
-
-    return(
-        <ColumnWrapper>
-            <Header text={'Recipes'}/>
-            <RowWrapper>
-                {Object.entries(props.recipes)
-                    .map(([name, ingredients], index) =>
-                        <Item key={`${index}-${name}`} text={name}/>
-                    )}
-            </RowWrapper>
-        </ColumnWrapper>
-
-    )
-}
+export const RecipesView = (props: RecipesViewProps) => (
+    <ColumnWrapper>
+        <Header text="Recipes"/>
+        <RowWrapper>
+            {Object.entries(props.recipes)
+                .map(([name, ingredients], index) => (
+                    <Item
+                        key={`${index}-${name}`}
+                        text={name}
+                        isWrapped={false}
+                    />
+                )
+                )}
+        </RowWrapper>
+    </ColumnWrapper>
+)
 
 const ColumnWrapper = styled.div`
   display: flex;

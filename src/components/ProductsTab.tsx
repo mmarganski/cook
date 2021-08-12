@@ -3,13 +3,23 @@ import styled from 'styled-components'
 import { ProductsView } from './ProductsView'
 import { NameInput } from './NameInput'
 
+enum Storage {
+    selected = 'selected',
+    products = 'products',
+    recipes = 'recipes'
+}
+
 export const ProductsTab = () => {
-    const products = JSON.parse(window.localStorage.getItem('products') || '[]')
+    const products = JSON.parse(window.localStorage.getItem(Storage.products) || '[]') as Array<string>
     const [currentState, setState] = useState<Array<string>>(products)
 
     const addProduct = (text: string) => {
         if (!currentState.includes(text)) {
-            setState(() => currentState.concat(text))
+            setState(prevState => {
+                window.localStorage.setItem(Storage.products, JSON.stringify(prevState.concat(text)))
+
+                return prevState.concat(text)
+            })
         }
     }
 

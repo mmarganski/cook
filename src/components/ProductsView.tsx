@@ -10,36 +10,32 @@ type ProductsViewProps = {
     lastUpdate: string
 }
 
-export const ProductsView = (props: ProductsViewProps) => {
-    window.localStorage.setItem('products', JSON.stringify(props.products))
-
-    return(
-        <ColumnWrapper>
-            <Header text={'Products'}/>
-            <RowWrapper>
-                {props.products
-                    .filter(product => product !== '')
-                    .map((product, index) => props.selectable
-                        ? (<Item
-                            key={`${index}-${product}`}
-                            text={product}
-                        />)
-                        : (<SelectWrapper
-                            key={`${index}-${product}`}
-                            text={product}
-                            lastUpdate={props.lastUpdate}
-                        />)
-                    )}
-            </RowWrapper>
-        </ColumnWrapper>
-    )
-}
+export const ProductsView = (props: ProductsViewProps) => (
+    <ColumnWrapper>
+        <Header text={'Products'}/>
+        <RowWrapper>
+            {props.products
+                .filter(product => product !== '')
+                .map((product, index) => props.selectable
+                    ? (<Item
+                        key={`${index}-${product}`}
+                        text={product}
+                        isWrapped={false}
+                    />)
+                    : (<SelectWrapper
+                        key={`${index}-${product}`}
+                        text={product}
+                        lastUpdate={props.lastUpdate}
+                    />)
+                )}</RowWrapper>
+    </ColumnWrapper>
+)
 
 const ColumnWrapper = styled.div`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  max-width: 70%;
+  align-items: center;
 `
 
 const RowWrapper = styled.div`
