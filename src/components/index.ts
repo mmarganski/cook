@@ -1,6 +1,7 @@
 export { NameInput } from './NameInput'
 export { Item } from './Item'
 export { SelectWrapper } from './SelectWrapper'
+export { Header } from './Header'
 export { ProductsView } from './ProductsView'
 export { RecipesView } from './RecipesView'
 export { SearchTab } from './SearchTab'

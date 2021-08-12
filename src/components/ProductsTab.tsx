@@ -4,8 +4,7 @@ import { ProductsView } from './ProductsView'
 import { NameInput } from './NameInput'
 
 export const ProductsTab = () => {
-
-    const products = (window.localStorage.getItem('products') || '').split(',')
+    const products = JSON.parse(window.localStorage.getItem('products') || '[]')
     const [currentState, setState] = useState<Array<string>>(products)
 
     const addProduct = (text: string) => {
@@ -17,7 +16,7 @@ export const ProductsTab = () => {
     return (
         <Wrapper>
             <NameInput onSubmittedInput={addProduct}/>
-            <ProductsView products={currentState}/>
+            <ProductsView products={currentState} lastUpdate={''} selectable/>
         </Wrapper>
     )
 }

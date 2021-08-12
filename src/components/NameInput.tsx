@@ -1,7 +1,11 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
-export const NameInput = (props: {onSubmittedInput(text: string): void}) => {
+type NameInputProps = {
+    onSubmittedInput(text: string): void
+}
+
+export const NameInput = (props: NameInputProps) => {
     const [currentState, setState] = useState('')
 
     const submitInput = () => {

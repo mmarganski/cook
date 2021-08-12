@@ -1,7 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 
-export const Item = (props: {text: string}) => (
+type ItemProps = {
+    text: string
+}
+
+export const Item = (props: ItemProps) => (
     <Wrapper>
         {props.text}
     </Wrapper>

@@ -9,13 +9,9 @@ enum Tab {
 }
 
 export const Main = () => {
-
-    const [currentState, setState] = useState(Tab.Products)
-
+    const [currentState, setState] = useState(Tab.Recipes)
     const onSelectProducts = () => setState(Tab.Products)
-
     const onSelectRecipes = () => setState(Tab.Recipes)
-
     const onSelectSearch = () => setState(Tab.Search)
 
     return (
