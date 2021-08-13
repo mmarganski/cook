@@ -5,9 +5,9 @@ type HeaderProps = {
     text: string
 }
 
-export const Header: React.FunctionComponent<HeaderProps> = props => (
+export const Header: React.FunctionComponent<HeaderProps> = ({text}) => (
     <Text>
-        {props.text}
+        {text}
     </Text>
 )
 

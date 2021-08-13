@@ -5,7 +5,7 @@ import { NameInput } from './NameInput'
 import { RecipesView } from './RecipesView'
 import { useLocalStorageProducts, useLocalStorageRecipes } from '../hooks'
 
-export const RecipesTab = () => {
+export const RecipesTab: React.FunctionComponent= () => {
     const {getStorageRecipes, setStorageRecipes} = useLocalStorageRecipes()
     const {getStorageProducts} = useLocalStorageProducts()
     const [recipes, setRecipes] = useState(Object.keys(getStorageRecipes()))
@@ -14,7 +14,7 @@ export const RecipesTab = () => {
     const addRecipe = (text: string) => {
         if (activeItems.length > 0 && text !== '') {
             setRecipes(prevRecipes => {
-                const storageRecipes =  getStorageRecipes()
+                const storageRecipes = getStorageRecipes()
                 setStorageRecipes({...storageRecipes, [text]: activeItems})
 
                 return prevRecipes.concat(text)

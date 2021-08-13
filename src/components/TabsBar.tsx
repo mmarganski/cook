@@ -8,12 +8,12 @@ type TabsBarProps = {
     onSelect(tab: Tab): void
 }
 
-export const TabsBar: React.FunctionComponent<TabsBarProps> = props => (
+export const TabsBar: React.FunctionComponent<TabsBarProps> = ({onSelect}) => (
     <Wrapper>
         {Object.values(Tab).map((tabName, index) => (
             <ClickableWrapper
                 key={`${index}-${tabName}`}
-                onSelect={() => props.onSelect(tabName)}
+                onSelect={() => onSelect(tabName)}
             >
                 <Header text={`${tabName}`}/>
             </ClickableWrapper>

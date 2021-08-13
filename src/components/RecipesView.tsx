@@ -2,24 +2,25 @@ import React from 'react'
 import styled from 'styled-components'
 import { Item } from './Item'
 import { Header } from './Header'
+import { Tab } from '../types'
 
 type RecipesViewProps= {
     recipes: Array<string>
 }
 
-export const RecipesView: React.FunctionComponent<RecipesViewProps> = props => (
+export const RecipesView: React.FunctionComponent<RecipesViewProps> = ({recipes}) => (
     <ColumnWrapper>
-        <Header text="Recipes"/>
+        <Header text={Tab.Recipes}/>
         <RowWrapper>
-            {props.recipes
+            {recipes
                 .map((name, index) => (
                     <Item
                         key={`${index}-${name}`}
                         text={name}
                         isWrapped={false}
                     />
-                )
-                )}
+                ))
+            }
         </RowWrapper>
     </ColumnWrapper>
 )

@@ -1,22 +1,22 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { ProductsTab, RecipesTab, SearchTab, TabsBar } from './index'
+import { ProductsTab } from './ProductsTab'
+import { RecipesTab } from './RecipesTab'
+import { SearchTab } from './SearchTab'
+import { TabsBar } from './TabsBar'
 import { Tab } from '../types'
 
 export const Main: React.FunctionComponent = () => {
     const [activeTab, setActiveTab] = useState(Tab.Products)
-
-    const onSelectTab= (tab: Tab) => {
+    const onSelectTab = (tab: Tab) => {
         switch (tab) {
-            case Tab.Products:
-                setActiveTab(Tab.Products)
-                break
             case Tab.Recipes:
                 setActiveTab(Tab.Recipes)
                 break
             case Tab.Search:
                 setActiveTab(Tab.Search)
                 break
+            case Tab.Products:
             default:
                 setActiveTab(Tab.Products)
         }
@@ -24,14 +24,19 @@ export const Main: React.FunctionComponent = () => {
 
     const renderTabs = () => {
         switch (activeTab) {
-            case Tab.Products:
-                return(<ProductsTab/>)
             case Tab.Recipes:
-                return(<RecipesTab/>)
+                return (
+                    <RecipesTab/>
+                )
             case Tab.Search:
-                return(<SearchTab/>)
+                return(
+                    <SearchTab/>
+                )
+            case Tab.Products:
             default:
-                return(<ProductsTab/>)
+                return(
+                    <ProductsTab/>
+                )
         }
     }
 

@@ -12,9 +12,19 @@ type SelectWrapperProps = {
     onSelect(text: string): void
 }
 
-export const SelectWrapper: React.FunctionComponent<SelectWrapperProps> = props => (
-    <Wrapper onClick={() => props.onSelect(props.text)} isActive={props.isActive}>
-        <Item text={props.text} isWrapped/>
+export const SelectWrapper: React.FunctionComponent<SelectWrapperProps> = ({
+    text,
+    isActive,
+    onSelect
+}) => (
+    <Wrapper
+        onClick={() => onSelect(text)}
+        isActive={isActive}
+    >
+        <Item
+            text={text}
+            isWrapped
+        />
     </Wrapper>
 )
 

@@ -2,13 +2,12 @@ import React from 'react'
 import styled from 'styled-components'
 
 type ClickableWrapperProps = {
-    children: React.ReactChild,
     onSelect(): void
 }
 
-export const ClickableWrapper: React.FunctionComponent<ClickableWrapperProps> = props => (
-    <Wrapper onClick={props.onSelect}>
-        {props.children}
+export const ClickableWrapper: React.FunctionComponent<ClickableWrapperProps> = ({onSelect, children}) => (
+    <Wrapper onClick={onSelect}>
+        {children}
     </Wrapper>
 )
 

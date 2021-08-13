@@ -1,5 +1,5 @@
-import './App.css'
 import { Main } from './components'
+import './App.css'
 
 export const App = () => (
     <div className="App">

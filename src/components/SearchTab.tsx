@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { ProductsView } from './ProductsView'
 import { RecipesView } from './RecipesView'
@@ -8,22 +8,26 @@ export const SearchTab: React.FunctionComponent = () => {
     const {getStorageRecipes} = useLocalStorageRecipes()
     const {getStorageProducts} = useLocalStorageProducts()
     const [recipes] = useState<Record<string, Array<string>>>(getStorageRecipes())
-    const [[activeProducts, activeRecipes], setActiveItems] = useState<Array<Array<string>>>([[], []])
+    const [activeProducts, setActiveProducts] = useState<Array<string>>([])
+    const [activeRecipes, setActiveRecipes] = useState<Array<string>>([])
 
     const onSelect = (text: string) => {
-        setActiveItems(([prevActiveProducts]) => {
-            const newActiveProducts = prevActiveProducts.includes(text)
+        setActiveProducts(prevActiveProducts =>
+            prevActiveProducts.includes(text)
                 ? prevActiveProducts.filter(item => item !== text)
                 : prevActiveProducts.concat(text)
-            const newActiveRecipes = Object.entries(recipes).map(([name, products]) =>
-                products.every(product => newActiveProducts.includes(product))
+        )
+    }
+
+    useEffect(() => setActiveRecipes(
+        Object.entries(recipes)
+            .map(([name, products]) =>
+                products.every(product => activeProducts.includes(product))
                     ? name
                     : ''
-            ).filter(product => product !== '')
+            ).filter(name => name !== '')
 
-            return [newActiveProducts, newActiveRecipes]
-        })
-    }
+    ), [activeProducts])
 
     return(
         <Wrapper>

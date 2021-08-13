@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Item } from './Item'
 import { SelectWrapper } from './SelectWrapper'
 import { Header } from './Header'
+import { Tab } from '../types'
 
 type ProductsViewProps = {
     products: Array<string>,
@@ -11,19 +12,24 @@ type ProductsViewProps = {
     onSelect(text: string): void
 }
 
-export const ProductsView = (props: ProductsViewProps) => (
+export const ProductsView: React.FunctionComponent<ProductsViewProps> = ({
+    products,
+    isSelectable,
+    activeItems,
+    onSelect
+}) => (
     <ColumnWrapper>
-        <Header text={'Products'}/>
+        <Header text={Tab.Products}/>
         <RowWrapper>
-            {props.products
+            {products
                 .filter(product => product !== '')
-                .map((product, index) => props.isSelectable
+                .map((product, index) => isSelectable
                     ? (
                         <SelectWrapper
                             key={`${index}-${product}`}
                             text={product}
-                            isActive={props.activeItems.includes(product)}
-                            onSelect={props.onSelect}
+                            isActive={activeItems.includes(product)}
+                            onSelect={onSelect}
                         />
                     ) : (
                         <Item
