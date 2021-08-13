@@ -2,12 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Header } from './Header'
 import { ClickableWrapper } from './ClickableWrapper'
-
-enum Tab {
-    Products = 'Products',
-    Recipes = 'Recipes',
-    Search = 'Search'
-}
+import { Tab } from '../types'
 
 type TabsBarProps = {
     onSelect(tab: Tab): void
@@ -16,7 +11,10 @@ type TabsBarProps = {
 export const TabsBar: React.FunctionComponent<TabsBarProps> = props => (
     <Wrapper>
         {Object.values(Tab).map((tabName, index) => (
-            <ClickableWrapper key={`${index}-${tabName}`} onSelect={() => props.onSelect(tabName)}>
+            <ClickableWrapper
+                key={`${index}-${tabName}`}
+                onSelect={() => props.onSelect(tabName)}
+            >
                 <Header text={`${tabName}`}/>
             </ClickableWrapper>
         ))}

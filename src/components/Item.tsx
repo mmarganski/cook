@@ -10,7 +10,7 @@ type WrapperStyles = {
     isWrapped: boolean
 }
 
-export const Item = (props: ItemProps) => (
+export const Item: React.FunctionComponent<ItemProps> = props => (
     <Wrapper isWrapped={props.isWrapped}>
         {props.text}
     </Wrapper>

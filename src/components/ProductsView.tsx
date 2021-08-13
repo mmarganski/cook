@@ -6,8 +6,9 @@ import { Header } from './Header'
 
 type ProductsViewProps = {
     products: Array<string>,
-    selectable: boolean,
-    lastUpdate: string
+    isSelectable: boolean,
+    activeItems: Array<string>,
+    onSelect(text: string): void
 }
 
 export const ProductsView = (props: ProductsViewProps) => (
@@ -16,17 +17,20 @@ export const ProductsView = (props: ProductsViewProps) => (
         <RowWrapper>
             {props.products
                 .filter(product => product !== '')
-                .map((product, index) => props.selectable
-                    ? (<Item
-                        key={`${index}-${product}`}
-                        text={product}
-                        isWrapped={false}
-                    />)
-                    : (<SelectWrapper
-                        key={`${index}-${product}`}
-                        text={product}
-                        lastUpdate={props.lastUpdate}
-                    />)
+                .map((product, index) => props.isSelectable
+                    ? (
+                        <SelectWrapper
+                            key={`${index}-${product}`}
+                            text={product}
+                            isActive={props.activeItems.includes(product)}
+                            onSelect={props.onSelect}
+                        />
+                    ) : (
+                        <Item
+                            key={`${index}-${product}`}
+                            text={product}
+                            isWrapped={false}
+                        />)
                 )}</RowWrapper>
     </ColumnWrapper>
 )

@@ -1,38 +1,44 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { ProductsTab, RecipesTab, SearchTab, TabsBar } from './index'
+import { Tab } from '../types'
 
-enum Tab {
-    Products = 'Products',
-    Recipes = 'Recipes',
-    Search = 'Search'
-}
-
-export const Main = () => {
-    const [currentState, setState] = useState(Tab.Products)
+export const Main: React.FunctionComponent = () => {
+    const [activeTab, setActiveTab] = useState(Tab.Products)
 
     const onSelectTab= (tab: Tab) => {
         switch (tab) {
             case Tab.Products:
-                setState(Tab.Products)
+                setActiveTab(Tab.Products)
                 break
             case Tab.Recipes:
-                setState(Tab.Recipes)
+                setActiveTab(Tab.Recipes)
                 break
             case Tab.Search:
-                setState(Tab.Search)
+                setActiveTab(Tab.Search)
                 break
             default:
-                setState(Tab.Products)
+                setActiveTab(Tab.Products)
+        }
+    }
+
+    const renderTabs = () => {
+        switch (activeTab) {
+            case Tab.Products:
+                return(<ProductsTab/>)
+            case Tab.Recipes:
+                return(<RecipesTab/>)
+            case Tab.Search:
+                return(<SearchTab/>)
+            default:
+                return(<ProductsTab/>)
         }
     }
 
     return (
         <Wrapper>
             <TabsBar onSelect={onSelectTab}/>
-            {currentState === Tab.Products && <ProductsTab/>}
-            {currentState === Tab.Recipes && <RecipesTab/>}
-            {currentState === Tab.Search && <SearchTab/>}
+            {renderTabs()}
         </Wrapper>
     )
 }

@@ -2,23 +2,18 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { ProductsView } from './ProductsView'
 import { NameInput } from './NameInput'
+import { useLocalStorageProducts } from '../hooks'
 
-enum Storage {
-    selected = 'selected',
-    products = 'products',
-    recipes = 'recipes'
-}
-
-export const ProductsTab = () => {
-    const products = JSON.parse(window.localStorage.getItem(Storage.products) || '[]') as Array<string>
-    const [currentState, setState] = useState<Array<string>>(products)
+export const ProductsTab: React.FunctionComponent = () => {
+    const {set: setStorageProducts, get: getStorageProducts} = useLocalStorageProducts()
+    const [currentProducts, setProducts] = useState<Array<string>>(JSON.parse(getStorageProducts()) as Array<string>)
 
     const addProduct = (text: string) => {
-        if (!currentState.includes(text)) {
-            setState(prevState => {
-                window.localStorage.setItem(Storage.products, JSON.stringify(prevState.concat(text)))
+        if (!currentProducts.includes(text)) {
+            setProducts(prevProducts => {
+                setStorageProducts(JSON.stringify(prevProducts.concat(text)))
 
-                return prevState.concat(text)
+                return prevProducts.concat(text)
             })
         }
     }
@@ -26,7 +21,12 @@ export const ProductsTab = () => {
     return (
         <Wrapper>
             <NameInput onSubmittedInput={addProduct}/>
-            <ProductsView products={currentState} lastUpdate={''} selectable/>
+            <ProductsView
+                products={currentProducts}
+                activeItems={[]}
+                isSelectable={false}
+                onSelect={() => false}
+            />
         </Wrapper>
     )
 }

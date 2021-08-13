@@ -6,7 +6,7 @@ type ClickableWrapperProps = {
     onSelect(): void
 }
 
-export const ClickableWrapper = (props: ClickableWrapperProps) => (
+export const ClickableWrapper: React.FunctionComponent<ClickableWrapperProps> = props => (
     <Wrapper onClick={props.onSelect}>
         {props.children}
     </Wrapper>

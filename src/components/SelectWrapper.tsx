@@ -1,12 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { Item } from './Item'
-
-enum Storage {
-    selected = 'selected',
-    products = 'products',
-    recipes = 'recipes'
-}
 
 type WrapperStyles = {
     isActive: boolean
@@ -14,34 +8,15 @@ type WrapperStyles = {
 
 type SelectWrapperProps = {
     text: string,
-    lastUpdate: string
+    isActive: boolean,
+    onSelect(text: string): void
 }
 
-export const SelectWrapper = (props: SelectWrapperProps) => {
-    const [[isActive, lastRecipe], setState] = useState([false, props.lastUpdate])
-
-    if (props.lastUpdate !== lastRecipe) {
-        setState([false, props.lastUpdate])
-    }
-
-    const selectItem = () => {
-        const currentSelect = window.localStorage.getItem(Storage.selected)
-            ? JSON.parse(window.localStorage.getItem(Storage.selected) || '') as Array<string>
-            : []
-        const newSelect = isActive
-            ? [...currentSelect].filter(element => element !== props.text)
-            : [...currentSelect, props.text]
-
-        window.localStorage.setItem(Storage.selected, JSON.stringify(newSelect))
-        setState([!isActive, lastRecipe])
-    }
-
-    return(
-        <Wrapper onClick={selectItem} isActive={isActive}>
-            <Item text={props.text} isWrapped/>
-        </Wrapper>
-    )
-}
+export const SelectWrapper: React.FunctionComponent<SelectWrapperProps> = props => (
+    <Wrapper onClick={() => props.onSelect(props.text)} isActive={props.isActive}>
+        <Item text={props.text} isWrapped/>
+    </Wrapper>
+)
 
 const Wrapper = styled.div<WrapperStyles>`
   border-radius: 60px;

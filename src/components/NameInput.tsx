@@ -5,19 +5,20 @@ type NameInputProps = {
     onSubmittedInput(text: string): void
 }
 
-export const NameInput = (props: NameInputProps) => {
-    const [currentState, setState] = useState('')
+export const NameInput: React.FunctionComponent<NameInputProps> = props => {
+    const [currentInput, setInput] = useState('')
 
     const submitInput = () => {
-        props.onSubmittedInput(currentState)
-        setState('')
+        props.onSubmittedInput(currentInput)
+        setInput('')
     }
 
     return(
         <Wrapper>
             <Input
-                value={currentState}
-                onChange={event => setState(event.target.value)}
+                value={currentInput}
+                onChange={event => setInput(event.target.value)}
+                onKeyDown={event => event.key === 'Enter' ? submitInput() : null}
             />
             <ConfirmButton onClick={submitInput}>
                 +

@@ -1,31 +1,34 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { ProductsView } from './ProductsView'
 import { NameInput } from './NameInput'
 import { RecipesView } from './RecipesView'
-
-enum Storage {
-    selected = 'selected',
-    products = 'products',
-    recipes = 'recipes'
-}
+import { useLocalStorageProducts, useLocalStorageRecipes } from '../hooks'
 
 export const RecipesTab = () => {
-    const products =  JSON.parse(window.localStorage.getItem(Storage.products) || '[]') as Array<string>
-    const recipes =  JSON.parse(window.localStorage.getItem(Storage.recipes) || '{}')
-    const [[currentRecipes, lastUpdate], setState] = useState([recipes, ''])
-
-    useEffect(() => {
-        window.localStorage.removeItem(Storage.selected)
-        window.localStorage.setItem(Storage.recipes, JSON.stringify(currentRecipes))
-    }, [currentRecipes])
+    const {get: getStorageRecipes, set: setStorageRecipes} = useLocalStorageRecipes()
+    const {get: getStorageProducts} = useLocalStorageProducts()
+    const [recipes, setRecipes] = useState(Object.keys(JSON.parse(getStorageRecipes())))
+    const [activeItems, setActiveItems] = useState<Array<string>>([])
 
     const addRecipe = (text: string) => {
-        const selectedProducts = window.localStorage.getItem(Storage.selected) || []
+        if (activeItems.length > 0 && text !== '') {
+            setRecipes(prevRecipes => {
+                const storageRecipes =  JSON.parse(getStorageRecipes())
+                setStorageRecipes(JSON.stringify({...storageRecipes, [text]: activeItems}))
 
-        if (selectedProducts.length > 0 && text !== '') {
-            setState(([prevRecipes]) => [{...prevRecipes, [text]: selectedProducts}, new Date().toTimeString()])
+                return prevRecipes.concat(text)
+            })
+            setActiveItems([])
         }
+    }
+
+    const onSelect = (text: string) => {
+        setActiveItems(prevActiveItems =>
+            prevActiveItems.includes(text)
+                ? prevActiveItems.filter(item => item !== text)
+                : prevActiveItems.concat(text)
+        )
     }
 
     return(
@@ -33,10 +36,12 @@ export const RecipesTab = () => {
             <NameInput onSubmittedInput={addRecipe}/>
             <WrapperRow>
                 <ProductsView
-                    products={products}
-                    selectable={false}
-                    lastUpdate={lastUpdate}/>
-                <RecipesView recipes={currentRecipes}/>
+                    products={JSON.parse(getStorageProducts()) as Array<string>}
+                    isSelectable
+                    onSelect={onSelect}
+                    activeItems={activeItems}
+                />
+                <RecipesView recipes={recipes}/>
             </WrapperRow>
         </WrapperColumn>
     )
