@@ -4,8 +4,7 @@ export enum Tab {
     Search = 'Search'
 }
 
-export type LocalStorageMethods = {
-    set(value: string): void,
-    get(): string,
-    remove(): void
+export enum Storage {
+    products = 'products',
+    recipes = 'recipes'
 }

@@ -6,16 +6,16 @@ import { RecipesView } from './RecipesView'
 import { useLocalStorageProducts, useLocalStorageRecipes } from '../hooks'
 
 export const RecipesTab = () => {
-    const {get: getStorageRecipes, set: setStorageRecipes} = useLocalStorageRecipes()
-    const {get: getStorageProducts} = useLocalStorageProducts()
-    const [recipes, setRecipes] = useState(Object.keys(JSON.parse(getStorageRecipes())))
+    const {getStorageRecipes, setStorageRecipes} = useLocalStorageRecipes()
+    const {getStorageProducts} = useLocalStorageProducts()
+    const [recipes, setRecipes] = useState(Object.keys(getStorageRecipes()))
     const [activeItems, setActiveItems] = useState<Array<string>>([])
 
     const addRecipe = (text: string) => {
         if (activeItems.length > 0 && text !== '') {
             setRecipes(prevRecipes => {
-                const storageRecipes =  JSON.parse(getStorageRecipes())
-                setStorageRecipes(JSON.stringify({...storageRecipes, [text]: activeItems}))
+                const storageRecipes =  getStorageRecipes()
+                setStorageRecipes({...storageRecipes, [text]: activeItems})
 
                 return prevRecipes.concat(text)
             })
@@ -36,7 +36,7 @@ export const RecipesTab = () => {
             <NameInput onSubmittedInput={addRecipe}/>
             <WrapperRow>
                 <ProductsView
-                    products={JSON.parse(getStorageProducts()) as Array<string>}
+                    products={getStorageProducts() as Array<string>}
                     isSelectable
                     onSelect={onSelect}
                     activeItems={activeItems}

@@ -5,9 +5,9 @@ import { RecipesView } from './RecipesView'
 import { useLocalStorageRecipes, useLocalStorageProducts } from '../hooks'
 
 export const SearchTab: React.FunctionComponent = () => {
-    const {get: getStorageRecipes} = useLocalStorageRecipes()
-    const {get: getStorageProducts} = useLocalStorageProducts()
-    const [recipes] = useState<Record<string, Array<string>>>(JSON.parse(getStorageRecipes()))
+    const {getStorageRecipes} = useLocalStorageRecipes()
+    const {getStorageProducts} = useLocalStorageProducts()
+    const [recipes] = useState<Record<string, Array<string>>>(getStorageRecipes())
     const [[activeProducts, activeRecipes], setActiveItems] = useState<Array<Array<string>>>([[], []])
 
     const onSelect = (text: string) => {
@@ -28,7 +28,7 @@ export const SearchTab: React.FunctionComponent = () => {
     return(
         <Wrapper>
             <ProductsView
-                products={JSON.parse(getStorageProducts()) as Array<string>}
+                products={getStorageProducts() as Array<string>}
                 isSelectable
                 activeItems={activeProducts}
                 onSelect={onSelect}

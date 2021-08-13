@@ -1,1 +1,2 @@
-export { useLocalStorageProducts, useLocalStorageRecipes } from './localStorageHooks'
+export { useLocalStorageProducts } from './useLocalStorageProducts'
+export { useLocalStorageRecipes } from './useLocalStorageRecipes'

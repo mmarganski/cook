@@ -1,3 +1,1 @@
-export { Tab } from './mainTypes'
-export type { LocalStorageMethods } from './mainTypes'
-
+export { Tab, Storage } from './mainTypes'
