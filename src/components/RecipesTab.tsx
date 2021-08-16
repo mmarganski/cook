@@ -4,10 +4,11 @@ import { useStore } from 'outstated'
 import { ProductsView } from './ProductsView'
 import { NameInput } from './NameInput'
 import { RecipesView } from './RecipesView'
-import { store } from './Main'
+import { useProductsStore, useRecipesStore } from '../stores'
 
 export const RecipesTab: React.FunctionComponent= () => {
-    const { storeProducts, storeRecipes, addStoreRecipe } = useStore(store)
+    const { storeProducts } = useStore(useProductsStore)
+    const { storeRecipes, addStoreRecipe } = useStore(useRecipesStore)
     const [activeItems, setActiveItems] = useState<Array<string>>([])
 
     const addRecipe = (text: string) => {

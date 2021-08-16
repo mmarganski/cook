@@ -3,10 +3,11 @@ import styled from 'styled-components'
 import { useStore } from 'outstated'
 import { ProductsView } from './ProductsView'
 import { RecipesView } from './RecipesView'
-import { store } from './Main'
+import { useProductsStore, useRecipesStore } from '../stores'
 
 export const SearchTab: React.FunctionComponent = () => {
-    const { storeProducts, storeRecipes } = useStore(store)
+    const { storeProducts } = useStore(useProductsStore)
+    const { storeRecipes } = useStore(useRecipesStore)
     const [activeProducts, setActiveProducts] = useState<Array<string>>([])
     const [activeRecipes, setActiveRecipes] = useState<Array<string>>([])
 

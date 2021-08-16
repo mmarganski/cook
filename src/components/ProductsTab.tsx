@@ -3,10 +3,10 @@ import styled from 'styled-components'
 import { useStore } from 'outstated'
 import { ProductsView } from './ProductsView'
 import { NameInput } from './NameInput'
-import { store } from './Main'
+import { useProductsStore } from '../stores'
 
 export const ProductsTab: React.FunctionComponent = () => {
-    const { storeProducts, addStoreProduct } = useStore(store)
+    const { storeProducts, addStoreProduct } = useStore(useProductsStore)
 
     const addProduct = (text: string) => {
         if (!storeProducts.includes(text)) {

@@ -6,22 +6,7 @@ import { RecipesTab } from './RecipesTab'
 import { SearchTab } from './SearchTab'
 import { TabsBar } from './TabsBar'
 import { Tab } from '../types'
-
-export const store = () => {
-    const [storeProducts, setProducts] = useState<Array<string>>([])
-    const [storeRecipes, setRecipes] = useState({})
-
-    const addStoreProduct = (newProduct: string) =>
-        setProducts(prevProducts => prevProducts.concat(newProduct))
-
-    const addStoreRecipe = (name: string, products: Array<string>) =>
-        setRecipes(prevRecipes => ({
-            ...prevRecipes,
-            [name]: products
-        }))
-
-    return { storeProducts, storeRecipes, addStoreProduct, addStoreRecipe }
-}
+import { useProductsStore, useRecipesStore } from '../stores'
 
 export const Main: React.FunctionComponent = () => {
     const [activeTab, setActiveTab] = useState(Tab.Products)
@@ -58,7 +43,7 @@ export const Main: React.FunctionComponent = () => {
     }
 
     return (
-        <Provider stores={[store]}>
+        <Provider stores={[useProductsStore, useRecipesStore]}>
             <Wrapper>
                 <TabsBar onSelect={onSelectTab}/>
                 {renderTabs()}
