@@ -15,7 +15,10 @@ export const RecipesTab: React.FunctionComponent= () => {
         if (activeItems.length > 0 && text !== '') {
             setRecipes(prevRecipes => {
                 const storageRecipes = getStorageRecipes()
-                setStorageRecipes({ ...storageRecipes, [text]: activeItems })
+                setStorageRecipes({
+                    ...storageRecipes,
+                    [text]: activeItems
+                })
 
                 return prevRecipes.concat(text)
             })
