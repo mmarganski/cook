@@ -6,8 +6,8 @@ import { RecipesView } from './RecipesView'
 import { useLocalStorageProducts, useLocalStorageRecipes } from '../hooks'
 
 export const RecipesTab: React.FunctionComponent= () => {
-    const {getStorageRecipes, setStorageRecipes} = useLocalStorageRecipes()
-    const {getStorageProducts} = useLocalStorageProducts()
+    const { getStorageRecipes, setStorageRecipes } = useLocalStorageRecipes()
+    const { getStorageProducts } = useLocalStorageProducts()
     const [recipes, setRecipes] = useState(Object.keys(getStorageRecipes()))
     const [activeItems, setActiveItems] = useState<Array<string>>([])
 
@@ -15,7 +15,7 @@ export const RecipesTab: React.FunctionComponent= () => {
         if (activeItems.length > 0 && text !== '') {
             setRecipes(prevRecipes => {
                 const storageRecipes = getStorageRecipes()
-                setStorageRecipes({...storageRecipes, [text]: activeItems})
+                setStorageRecipes({ ...storageRecipes, [text]: activeItems })
 
                 return prevRecipes.concat(text)
             })

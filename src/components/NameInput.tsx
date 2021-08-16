@@ -5,7 +5,7 @@ type NameInputProps = {
     onSubmittedInput(text: string): void
 }
 
-export const NameInput: React.FunctionComponent<NameInputProps> = ({onSubmittedInput}) => {
+export const NameInput: React.FunctionComponent<NameInputProps> = ({ onSubmittedInput }) => {
     const [currentInput, setInput] = useState('')
 
     const submitInput = () => {

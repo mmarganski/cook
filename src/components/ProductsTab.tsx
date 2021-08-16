@@ -5,7 +5,7 @@ import { NameInput } from './NameInput'
 import { useLocalStorageProducts } from '../hooks'
 
 export const ProductsTab: React.FunctionComponent = () => {
-    const {setStorageProducts, getStorageProducts} = useLocalStorageProducts()
+    const { setStorageProducts, getStorageProducts } = useLocalStorageProducts()
     const [currentProducts, setProducts] = useState<Array<string>>(getStorageProducts() as Array<string>)
 
     const addProduct = (text: string) => {

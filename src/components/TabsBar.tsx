@@ -8,7 +8,7 @@ type TabsBarProps = {
     onSelect(tab: Tab): void
 }
 
-export const TabsBar: React.FunctionComponent<TabsBarProps> = ({onSelect}) => (
+export const TabsBar: React.FunctionComponent<TabsBarProps> = ({ onSelect }) => (
     <Wrapper>
         {Object.values(Tab).map((tabName, index) => (
             <ClickableWrapper

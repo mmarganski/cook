@@ -5,8 +5,8 @@ import { RecipesView } from './RecipesView'
 import { useLocalStorageRecipes, useLocalStorageProducts } from '../hooks'
 
 export const SearchTab: React.FunctionComponent = () => {
-    const {getStorageRecipes} = useLocalStorageRecipes()
-    const {getStorageProducts} = useLocalStorageProducts()
+    const { getStorageRecipes } = useLocalStorageRecipes()
+    const { getStorageProducts } = useLocalStorageProducts()
     const [recipes] = useState<Record<string, Array<string>>>(getStorageRecipes())
     const [activeProducts, setActiveProducts] = useState<Array<string>>([])
     const [activeRecipes, setActiveRecipes] = useState<Array<string>>([])
@@ -19,15 +19,16 @@ export const SearchTab: React.FunctionComponent = () => {
         )
     }
 
-    useEffect(() => setActiveRecipes(
-        Object.entries(recipes)
-            .map(([name, products]) =>
-                products.every(product => activeProducts.includes(product))
-                    ? name
-                    : ''
-            ).filter(name => name !== '')
-
-    ), [activeProducts])
+    useEffect(() => {
+        setActiveRecipes(
+            Object.entries(recipes)
+                .map(([name, products]) =>
+                    products.every(product => activeProducts.includes(product))
+                        ? name
+                        : ''
+                ).filter(Boolean)
+        )
+    }, [activeProducts])
 
     return(
         <Wrapper>

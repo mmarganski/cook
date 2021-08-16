@@ -8,7 +8,7 @@ type RecipesViewProps= {
     recipes: Array<string>
 }
 
-export const RecipesView: React.FunctionComponent<RecipesViewProps> = ({recipes}) => (
+export const RecipesView: React.FunctionComponent<RecipesViewProps> = ({ recipes }) => (
     <ColumnWrapper>
         <Header text={Tab.Recipes}/>
         <RowWrapper>
