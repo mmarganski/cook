@@ -1,10 +1,27 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { Provider } from 'outstated'
 import { ProductsTab } from './ProductsTab'
 import { RecipesTab } from './RecipesTab'
 import { SearchTab } from './SearchTab'
 import { TabsBar } from './TabsBar'
 import { Tab } from '../types'
+
+export const store = () => {
+    const [storeProducts, setProducts] = useState<Array<string>>([])
+    const [storeRecipes, setRecipes] = useState({})
+
+    const addStoreProduct = (newProduct: string) =>
+        setProducts(prevProducts => prevProducts.concat(newProduct))
+
+    const addStoreRecipe = (name: string, products: Array<string>) =>
+        setRecipes(prevRecipes => ({
+            ...prevRecipes,
+            [name]: products
+        }))
+
+    return { storeProducts, storeRecipes, addStoreProduct, addStoreRecipe }
+}
 
 export const Main: React.FunctionComponent = () => {
     const [activeTab, setActiveTab] = useState(Tab.Products)
@@ -41,10 +58,12 @@ export const Main: React.FunctionComponent = () => {
     }
 
     return (
-        <Wrapper>
-            <TabsBar onSelect={onSelectTab}/>
-            {renderTabs()}
-        </Wrapper>
+        <Provider stores={[store]}>
+            <Wrapper>
+                <TabsBar onSelect={onSelectTab}/>
+                {renderTabs()}
+            </Wrapper>
+        </Provider>
     )
 }
 

@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { useStore } from 'outstated'
 import { ProductsView } from './ProductsView'
 import { RecipesView } from './RecipesView'
-import { useLocalStorageRecipes, useLocalStorageProducts } from '../hooks'
+import { store } from './Main'
 
 export const SearchTab: React.FunctionComponent = () => {
-    const { getStorageRecipes } = useLocalStorageRecipes()
-    const { getStorageProducts } = useLocalStorageProducts()
-    const [recipes] = useState<Record<string, Array<string>>>(getStorageRecipes())
+    const { storeProducts, storeRecipes } = useStore(store)
     const [activeProducts, setActiveProducts] = useState<Array<string>>([])
     const [activeRecipes, setActiveRecipes] = useState<Array<string>>([])
 
@@ -21,7 +20,7 @@ export const SearchTab: React.FunctionComponent = () => {
 
     useEffect(() => {
         setActiveRecipes(
-            Object.entries(recipes)
+            (Object.entries(storeRecipes) as Array<[string, Array<string>]>)
                 .map(([name, products]) =>
                     products.every(product => activeProducts.includes(product))
                         ? name
@@ -33,7 +32,7 @@ export const SearchTab: React.FunctionComponent = () => {
     return(
         <Wrapper>
             <ProductsView
-                products={getStorageProducts() as Array<string>}
+                products={storeProducts as Array<string>}
                 isSelectable
                 activeItems={activeProducts}
                 onSelect={onSelect}
