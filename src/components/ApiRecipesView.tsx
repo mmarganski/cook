@@ -16,24 +16,24 @@ export const ApiRecipesView: React.FunctionComponent<ApiRecipesViewProps> = ({
     onSelect
 }) => {
 
-    const { fetchData, loading, error } = useFetch()
+    const { fetchData, loading, error } = useFetch<Array<ApiResponseRecipe>>()
     const [recipes, setRecipes] = useState<Record<string, number>>({})
 
     useEffect(() => {
-        loadData(url)
+        fetchData(url, onDataLoaded, onLoadingError)
     }, [url])
 
-    const loadData = async (url: string) => {
-        const data = await fetchData(url)
+    const onDataLoaded = (data: Array<ApiResponseRecipe>) => {
+        const recipes = data.reduce((acc: Record<string, number>, recipe: ApiResponseRecipe) => {
+            acc[recipe.title] = recipe.id
 
-        if (data) {
-            const recipes = data.reduce((acc: Record<string, number>, recipe: ApiResponseRecipe) => {
-                acc[recipe.title] = recipe.id
+            return acc
+        }, {})
+        setRecipes(recipes)
+    }
 
-                return acc
-            }, {})
-            setRecipes(recipes)
-        }
+    const onLoadingError = () => {
+        // additional error handling may be implemented later
     }
 
     const renderRecipes = () => {
@@ -55,7 +55,7 @@ export const ApiRecipesView: React.FunctionComponent<ApiRecipesViewProps> = ({
             )
         }
 
-        return(Object.entries(recipes)
+        return Object.entries(recipes)
             .map(([name, id]) => (
                 <RecipeItem
                     key={`${id}-${name}`}
@@ -63,7 +63,7 @@ export const ApiRecipesView: React.FunctionComponent<ApiRecipesViewProps> = ({
                     recipeId={`${id}`}
                     onSelect={onSelect}
                 />
-            )))
+            ))
     }
 
     return(

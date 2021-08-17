@@ -16,21 +16,21 @@ export const Modal: React.FunctionComponent<ModalProps> = ({
     onClose
 }) => {
 
-    const { fetchData, loading, error } = useFetch()
+    const { fetchData, loading, error } = useFetch<ApiRecipeDetails>()
     const [instructions, setInstructions] = useState('')
     const [sourceUrl, setSourceUrl] = useState('')
 
     useEffect(() => {
-        loadData(url)
+        fetchData(url, onDataLoaded, onLoadingError)
     }, [url])
 
-    const loadData = async (url: string) => {
-        const data: ApiRecipeDetails = await fetchData(url)
+    const onDataLoaded = (data: ApiRecipeDetails) => {
+        setInstructions(data.instructions || 'instructions not found for this recipe')
+        setSourceUrl(data.sourceUrl)
+    }
 
-        if (data) {
-            setInstructions(data.instructions || 'instructions not found for this recipe')
-            setSourceUrl(data.sourceUrl)
-        }
+    const onLoadingError = () => {
+        // additional error handling may be implemented later
     }
 
     const renderRecipes = () => {

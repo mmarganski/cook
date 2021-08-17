@@ -1,10 +1,14 @@
 import { useState } from 'react'
 
-export const useFetch = () => {
+export const useFetch = <T>() => {
     const [loading, setLoading] = useState<boolean>(false)
     const [error, setError] = useState<boolean>(false)
 
-    const fetchData = (url: string) => {
+    const fetchData = (
+        url: string,
+        onSuccess: (data: T) => void,
+        onFailure: () => void
+    ) => {
         if (url === '') {
             return null
         }
@@ -12,19 +16,20 @@ export const useFetch = () => {
         setLoading(true)
         setError(false)
 
-        return fetch(url)
+        fetch(url)
             .then(response => response.json())
             .then(response => {
                 setLoading(false)
-                if (response?.code && response.code !==200) {
+                if (response?.code && response.code >= 300 || response.code < 200) {
                     throw new Error(response.code)
                 }
 
-                return response
+                onSuccess(response)
             })
             .catch(() => {
                 setLoading(false)
                 setError(true)
+                onFailure()
             })
     }
 

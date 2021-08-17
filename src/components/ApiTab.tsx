@@ -38,7 +38,7 @@ export const ApiTab: React.FunctionComponent = () => {
         }
     }, [activeProducts])
 
-    const fetchRecipeSpecs = async (id: string) => {
+    const fetchRecipeSpecs = (id: string) => {
         const apiKey = process.env.REACT_APP_API_KEY
         const url = `https://api.spoonacular.com/recipes/${id}/information?apiKey=${apiKey}`
 
