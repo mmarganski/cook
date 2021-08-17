@@ -52,4 +52,5 @@ const RowWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   max-width: 70%;
+  justify-content: center;
 `

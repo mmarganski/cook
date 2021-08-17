@@ -4,6 +4,7 @@ import { Provider } from 'outstated'
 import { ProductsTab } from './ProductsTab'
 import { RecipesTab } from './RecipesTab'
 import { SearchTab } from './SearchTab'
+import { ApiTab } from './ApiTab'
 import { TabsBar } from './TabsBar'
 import { Tab } from '../types'
 import { useProductsStore, useRecipesStore } from '../stores'
@@ -17,6 +18,9 @@ export const Main: React.FunctionComponent = () => {
                 break
             case Tab.Search:
                 setActiveTab(Tab.Search)
+                break
+            case Tab.Api:
+                setActiveTab(Tab.Api)
                 break
             case Tab.Products:
             default:
@@ -33,6 +37,10 @@ export const Main: React.FunctionComponent = () => {
             case Tab.Search:
                 return(
                     <SearchTab/>
+                )
+            case Tab.Api:
+                return(
+                    <ApiTab/>
                 )
             case Tab.Products:
             default:
