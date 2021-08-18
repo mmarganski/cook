@@ -3,7 +3,8 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link
+    Link,
+    Redirect
 } from 'react-router-dom'
 import styled from 'styled-components'
 import { Provider } from 'outstated'
@@ -42,9 +43,7 @@ export const Main: React.FunctionComponent = () => (
                         {tabComponent}
                     </Route>
                 ))}
-                <Route path="*">
-                    <ProductsTab/>
-                </Route>
+                <Redirect to={Object.keys(TabComponents).find(Boolean) || ''}/>
             </Switch>
         </Router>
     </Provider>

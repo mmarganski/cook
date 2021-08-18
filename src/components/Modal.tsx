@@ -50,22 +50,20 @@ export const Modal: React.FunctionComponent<ModalProps> = ({
         )
     }
 
-    return isActive
-        ? (
-            <>
-                <Overlay onClick={onClose}/>
-                <Wrapper>
-                    {renderRecipes()}
-                    <a
-                        href={sourceUrl}
-                        target="_blank"
-                    >
-                        recipe source
-                    </a>
-                </Wrapper>
-            </>
-        )
-        : null
+    return isActive ? (
+        <>
+            <Overlay onClick={onClose}/>
+            <Wrapper>
+                {renderRecipes()}
+                <a
+                    href={sourceUrl}
+                    target="_blank"
+                >
+                    recipe source
+                </a>
+            </Wrapper>
+        </>
+    ): null
 }
 
 const Overlay = styled.div`
