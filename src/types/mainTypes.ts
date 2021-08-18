@@ -1,7 +1,8 @@
 export enum Tab {
     Products = 'Products',
     Recipes = 'Recipes',
-    Search = 'Search'
+    Search = 'Search',
+    Api = 'Api'
 }
 
 export enum Storage {

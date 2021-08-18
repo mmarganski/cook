@@ -1,20 +1,16 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
+import { useStore } from 'outstated'
 import { ProductsView } from './ProductsView'
 import { NameInput } from './NameInput'
-import { useLocalStorageProducts } from '../hooks'
+import { useProductsStore } from '../stores'
 
 export const ProductsTab: React.FunctionComponent = () => {
-    const { setStorageProducts, getStorageProducts } = useLocalStorageProducts()
-    const [currentProducts, setProducts] = useState<Array<string>>(getStorageProducts() as Array<string>)
+    const { storeProducts, addStoreProduct } = useStore(useProductsStore)
 
     const addProduct = (text: string) => {
-        if (!currentProducts.includes(text)) {
-            setProducts(prevProducts => {
-                setStorageProducts(prevProducts.concat(text))
-
-                return prevProducts.concat(text)
-            })
+        if (!storeProducts.includes(text)) {
+            addStoreProduct(text)
         }
     }
 
@@ -22,7 +18,6 @@ export const ProductsTab: React.FunctionComponent = () => {
         <Wrapper>
             <NameInput onSubmittedInput={addProduct}/>
             <ProductsView
-                products={currentProducts}
                 activeItems={[]}
                 isSelectable={false}
                 onSelect={() => false}

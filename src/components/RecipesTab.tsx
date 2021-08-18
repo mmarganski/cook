@@ -1,27 +1,18 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { useStore } from 'outstated'
 import { ProductsView } from './ProductsView'
 import { NameInput } from './NameInput'
 import { RecipesView } from './RecipesView'
-import { useLocalStorageProducts, useLocalStorageRecipes } from '../hooks'
+import { useRecipesStore } from '../stores'
 
 export const RecipesTab: React.FunctionComponent= () => {
-    const { getStorageRecipes, setStorageRecipes } = useLocalStorageRecipes()
-    const { getStorageProducts } = useLocalStorageProducts()
-    const [recipes, setRecipes] = useState(Object.keys(getStorageRecipes()))
+    const { storeRecipes, addStoreRecipe } = useStore(useRecipesStore)
     const [activeItems, setActiveItems] = useState<Array<string>>([])
 
     const addRecipe = (text: string) => {
         if (activeItems.length > 0 && text !== '') {
-            setRecipes(prevRecipes => {
-                const storageRecipes = getStorageRecipes()
-                setStorageRecipes({
-                    ...storageRecipes,
-                    [text]: activeItems
-                })
-
-                return prevRecipes.concat(text)
-            })
+            addStoreRecipe(text, activeItems)
             setActiveItems([])
         }
     }
@@ -39,12 +30,11 @@ export const RecipesTab: React.FunctionComponent= () => {
             <NameInput onSubmittedInput={addRecipe}/>
             <WrapperRow>
                 <ProductsView
-                    products={getStorageProducts() as Array<string>}
                     isSelectable
                     onSelect={onSelect}
                     activeItems={activeItems}
                 />
-                <RecipesView recipes={recipes}/>
+                <RecipesView recipes={Object.keys(storeRecipes)}/>
             </WrapperRow>
         </WrapperColumn>
     )

@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { useStore } from 'outstated'
 import { ProductsView } from './ProductsView'
 import { RecipesView } from './RecipesView'
-import { useLocalStorageRecipes, useLocalStorageProducts } from '../hooks'
+import { useRecipesStore } from '../stores'
 
 export const SearchTab: React.FunctionComponent = () => {
-    const { getStorageRecipes } = useLocalStorageRecipes()
-    const { getStorageProducts } = useLocalStorageProducts()
-    const [recipes] = useState<Record<string, Array<string>>>(getStorageRecipes())
+    const { storeRecipes } = useStore(useRecipesStore)
     const [activeProducts, setActiveProducts] = useState<Array<string>>([])
     const [activeRecipes, setActiveRecipes] = useState<Array<string>>([])
 
@@ -20,20 +19,18 @@ export const SearchTab: React.FunctionComponent = () => {
     }
 
     useEffect(() => {
-        setActiveRecipes(
-            Object.entries(recipes)
-                .map(([name, products]) =>
-                    products.every(product => activeProducts.includes(product))
-                        ? name
-                        : ''
-                ).filter(Boolean)
+        setActiveRecipes(Object.entries(storeRecipes)
+            .map(([name, products]) =>
+                products.every(product => activeProducts.includes(product))
+                    ? name
+                    : ''
+            ).filter(Boolean)
         )
     }, [activeProducts])
 
     return(
         <Wrapper>
             <ProductsView
-                products={getStorageProducts() as Array<string>}
                 isSelectable
                 activeItems={activeProducts}
                 onSelect={onSelect}
