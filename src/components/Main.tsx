@@ -1,68 +1,71 @@
-import React, { useState } from 'react'
+import React from 'react'
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from 'react-router-dom'
 import styled from 'styled-components'
 import { Provider } from 'outstated'
 import { ProductsTab } from './ProductsTab'
 import { RecipesTab } from './RecipesTab'
 import { SearchTab } from './SearchTab'
 import { ApiTab } from './ApiTab'
-import { TabsBar } from './TabsBar'
-import { Tab } from '../types'
 import { useProductsStore, useRecipesStore } from '../stores'
 
-export const Main: React.FunctionComponent = () => {
-    const [activeTab, setActiveTab] = useState(Tab.Products)
-    const onSelectTab = (tab: Tab) => {
-        switch (tab) {
-            case Tab.Recipes:
-                setActiveTab(Tab.Recipes)
-                break
-            case Tab.Search:
-                setActiveTab(Tab.Search)
-                break
-            case Tab.Api:
-                setActiveTab(Tab.Api)
-                break
-            case Tab.Products:
-            default:
-                setActiveTab(Tab.Products)
-        }
-    }
-
-    const renderTabs = () => {
-        switch (activeTab) {
-            case Tab.Recipes:
-                return (
-                    <RecipesTab/>
-                )
-            case Tab.Search:
-                return(
-                    <SearchTab/>
-                )
-            case Tab.Api:
-                return(
-                    <ApiTab/>
-                )
-            case Tab.Products:
-            default:
-                return(
-                    <ProductsTab/>
-                )
-        }
-    }
-
-    return (
-        <Provider stores={[useProductsStore, useRecipesStore]}>
-            <Wrapper>
-                <TabsBar onSelect={onSelectTab}/>
-                {renderTabs()}
-            </Wrapper>
-        </Provider>
-    )
+const TabComponents = {
+    products: () => (<ProductsTab/>),
+    recipes: () => (<RecipesTab/>),
+    search: () => (<SearchTab/>),
+    api: () => (<ApiTab/>)
 }
 
-const Wrapper = styled.div`
+export const Main: React.FunctionComponent = () => (
+    <Provider stores={[useProductsStore, useRecipesStore]}>
+        <Router>
+            <TabWrapper>
+                {Object.keys(TabComponents).map(tab => (
+                    <StyledLink
+                        to={`/${tab}`}
+                        key={tab}
+                    >
+                        {tab}
+                    </StyledLink>
+                ))}
+            </TabWrapper>
+            <Switch>
+                {Object.entries(TabComponents).map(([tabName, tabComponent]) => (
+                    <Route
+                        key={tabName}
+                        path={`/${tabName}`}
+                    >
+                        {tabComponent}
+                    </Route>
+                ))}
+                <Route path="*">
+                    <ProductsTab/>
+                </Route>
+            </Switch>
+        </Router>
+    </Provider>
+)
+
+const TabWrapper = styled.div`
+  margin: 20px 6% 40px 6%;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100vh;
+  justify-content: center;
+  font-size: x-large;
+`
+
+const StyledLink =styled(Link)`
+  margin: 20px;
+  border-bottom: solid 4px darkred;
+  text-decoration: none;
+  color: black;
+  font-family: Lato, serif;
+  font-size: 26px;
+  :hover{
+    margin: 18px;
+    font-size: 30px;
+  }
 `

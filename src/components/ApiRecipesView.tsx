@@ -15,8 +15,7 @@ export const ApiRecipesView: React.FunctionComponent<ApiRecipesViewProps> = ({
     url,
     onSelect
 }) => {
-
-    const { fetchData, loading, error } = useFetch<Array<ApiResponseRecipe>>()
+    const { fetchData, isLoading, hasError } = useFetch<Array<ApiResponseRecipe>>()
     const [recipes, setRecipes] = useState<Record<string, number>>({})
 
     useEffect(() => {
@@ -24,11 +23,11 @@ export const ApiRecipesView: React.FunctionComponent<ApiRecipesViewProps> = ({
     }, [url])
 
     const onDataLoaded = (data: Array<ApiResponseRecipe>) => {
-        const recipes = data.reduce((acc: Record<string, number>, recipe: ApiResponseRecipe) => {
-            acc[recipe.title] = recipe.id
+        const recipes = data.reduce((acc, recipe) => ({
+            ...acc,
+            [recipe.title]: recipe.id
+        }), {} as Record<string, number>)
 
-            return acc
-        }, {})
         setRecipes(recipes)
     }
 
@@ -43,13 +42,13 @@ export const ApiRecipesView: React.FunctionComponent<ApiRecipesViewProps> = ({
             )
         }
 
-        if (loading) {
+        if (isLoading) {
             return(
                 <Message text="loading"/>
             )
         }
 
-        if (error || !Object.entries(recipes).length) {
+        if (hasError || !Object.entries(recipes).length) {
             return(
                 <Message text="no matching recipes found"/>
             )
@@ -60,7 +59,7 @@ export const ApiRecipesView: React.FunctionComponent<ApiRecipesViewProps> = ({
                 <RecipeItem
                     key={`${id}-${name}`}
                     text={name}
-                    recipeId={`${id}`}
+                    recipeId={String(id)}
                     onSelect={onSelect}
                 />
             ))

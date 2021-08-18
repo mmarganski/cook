@@ -1,23 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { ProductsView } from './ProductsView'
-import { useStore } from 'outstated'
-import { useProductsStore } from '../stores'
 import { ApiRecipesView } from './ApiRecipesView'
 import { Modal } from './Modal'
 
 export const ApiTab: React.FunctionComponent = () => {
-    const { storeProducts } = useStore(useProductsStore)
     const [activeProducts, setActiveProducts] = useState<Array<string>>([])
     const [recipesUrl, setRecipesUrl] = useState<string>('')
     const [modalUrl, setModalUrl] = useState<string>('')
     const [isModalActive, setModal] = useState(false)
 
     const onProductSelect = (text: string) => {
-        setActiveProducts(prevActiveProducts =>
-            prevActiveProducts.includes(text)
-                ? prevActiveProducts.filter(item => item !== text)
-                : prevActiveProducts.concat(text)
+        setActiveProducts(prevActiveProducts => prevActiveProducts.includes(text)
+            ? prevActiveProducts.filter(item => item !== text)
+            : prevActiveProducts.concat(text)
         )
     }
 
@@ -49,7 +45,6 @@ export const ApiTab: React.FunctionComponent = () => {
     return (
         <Wrapper>
             <ProductsView
-                products={storeProducts as Array<string>}
                 isSelectable
                 activeItems={activeProducts}
                 onSelect={onProductSelect}

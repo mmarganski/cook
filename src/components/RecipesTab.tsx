@@ -4,10 +4,9 @@ import { useStore } from 'outstated'
 import { ProductsView } from './ProductsView'
 import { NameInput } from './NameInput'
 import { RecipesView } from './RecipesView'
-import { useProductsStore, useRecipesStore } from '../stores'
+import { useRecipesStore } from '../stores'
 
 export const RecipesTab: React.FunctionComponent= () => {
-    const { storeProducts } = useStore(useProductsStore)
     const { storeRecipes, addStoreRecipe } = useStore(useRecipesStore)
     const [activeItems, setActiveItems] = useState<Array<string>>([])
 
@@ -31,7 +30,6 @@ export const RecipesTab: React.FunctionComponent= () => {
             <NameInput onSubmittedInput={addRecipe}/>
             <WrapperRow>
                 <ProductsView
-                    products={storeProducts as Array<string>}
                     isSelectable
                     onSelect={onSelect}
                     activeItems={activeItems}

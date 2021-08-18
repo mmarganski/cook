@@ -1,13 +1,14 @@
 import { useState } from 'react'
+import { VoidFunction } from '../types'
 
 export const useFetch = <T>() => {
-    const [loading, setLoading] = useState<boolean>(false)
-    const [error, setError] = useState<boolean>(false)
+    const [isLoading, setLoading] = useState<boolean>(false)
+    const [hasError, setError] = useState<boolean>(false)
 
     const fetchData = (
         url: string,
         onSuccess: (data: T) => void,
-        onFailure: () => void
+        onFailure: VoidFunction
     ) => {
         if (url === '') {
             return null
@@ -35,7 +36,7 @@ export const useFetch = <T>() => {
 
     return {
         fetchData,
-        loading,
-        error
+        isLoading,
+        hasError
     }
 }

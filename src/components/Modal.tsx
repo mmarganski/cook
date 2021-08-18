@@ -15,8 +15,7 @@ export const Modal: React.FunctionComponent<ModalProps> = ({
     url,
     onClose
 }) => {
-
-    const { fetchData, loading, error } = useFetch<ApiRecipeDetails>()
+    const { fetchData, isLoading, hasError } = useFetch<ApiRecipeDetails>()
     const [instructions, setInstructions] = useState('')
     const [sourceUrl, setSourceUrl] = useState('')
 
@@ -34,26 +33,25 @@ export const Modal: React.FunctionComponent<ModalProps> = ({
     }
 
     const renderRecipes = () => {
-        if (loading) {
+        if (isLoading) {
             return(
                 <Message text="loading"/>
             )
         }
 
-        if (error) {
+        if (hasError) {
             return(
                 <Message text="failed to load recipe instructions"/>
             )
         }
 
         return(
-            <div dangerouslySetInnerHTML={{ __html: instructions }} />
+            <StyledText dangerouslySetInnerHTML={{ __html: instructions }} />
         )
     }
 
-    return !isActive
-        ? null
-        : (
+    return isActive
+        ? (
             <>
                 <Overlay onClick={onClose}/>
                 <Wrapper>
@@ -67,7 +65,9 @@ export const Modal: React.FunctionComponent<ModalProps> = ({
                 </Wrapper>
             </>
         )
+        : null
 }
+
 const Overlay = styled.div`
   position: fixed;
   top: 0;
@@ -85,5 +85,11 @@ const Wrapper = styled.div`
   padding: 30px;
   background-color: white;
   z-index: 1000;
-  margin: 0 20% 20% 20%
+  margin: 20%
+`
+
+const StyledText = styled.div`
+  font-size: 18px;
+  font-family: Helvetica, monospace;
+  margin-bottom: 10px;
 `

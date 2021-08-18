@@ -18,7 +18,6 @@ export const ProductsTab: React.FunctionComponent = () => {
         <Wrapper>
             <NameInput onSubmittedInput={addProduct}/>
             <ProductsView
-                products={storeProducts}
                 activeItems={[]}
                 isSelectable={false}
                 onSelect={() => false}
