@@ -1,22 +1,24 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Header } from './Header'
-import { ClickableWrapper } from './ClickableWrapper'
-import { Tab } from '../types'
+import { Link } from 'react-router-dom'
 
 type TabsBarProps = {
-    onSelect(tab: Tab): void
+    tabs: Array<string>,
+    translation: Record<string, string>
 }
 
-export const TabsBar: React.FunctionComponent<TabsBarProps> = ({ onSelect }) => (
+export const TabsBar: React.FunctionComponent<TabsBarProps> = ({
+    tabs,
+    translation
+}) => (
     <Wrapper>
-        {Object.values(Tab).map((tabName, index) => (
-            <ClickableWrapper
-                key={`${index}-${tabName}`}
-                onSelect={() => onSelect(tabName)}
+        {tabs.map(tab => (
+            <StyledLink
+                to={`/${tab}`}
+                key={tab}
             >
-                <Header text={`${tabName}`}/>
-            </ClickableWrapper>
+                {translation?.[tab] || null}
+            </StyledLink>
         ))}
     </Wrapper>
 )
@@ -24,7 +26,18 @@ export const TabsBar: React.FunctionComponent<TabsBarProps> = ({ onSelect }) => 
 const Wrapper = styled.div`
   margin: 20px 6% 40px 6%;
   display: flex;
-  flex-direction: row;
   justify-content: center;
   font-size: x-large;
+`
+const StyledLink =styled(Link)`
+  margin: 20px;
+  border-bottom: solid 4px darkred;
+  text-decoration: none;
+  color: black;
+  font-family: Lato, serif;
+  font-size: 26px;
+  :hover{
+    margin: 18px;
+    font-size: 30px;
+  }
 `

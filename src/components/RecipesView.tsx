@@ -2,28 +2,30 @@ import React from 'react'
 import styled from 'styled-components'
 import { Item } from './Item'
 import { Header } from './Header'
-import { Tab } from '../types'
+import { useTranslation } from '../hooks'
 
 type RecipesViewProps= {
     recipes: Array<string>
 }
 
-export const RecipesView: React.FunctionComponent<RecipesViewProps> = ({ recipes }) => (
-    <ColumnWrapper>
-        <Header text={Tab.Recipes}/>
-        <RowWrapper>
-            {recipes
-                .map((name, index) => (
+export const RecipesView: React.FunctionComponent<RecipesViewProps> = ({ recipes }) => {
+    const translation = useTranslation()
+
+    return (
+        <ColumnWrapper>
+            <Header text={translation.tabs.recipes}/>
+            <RowWrapper>
+                {recipes.map((name, index) => (
                     <Item
                         key={`${index}-${name}`}
                         text={name}
                         isWrapped={false}
                     />
-                ))
-            }
-        </RowWrapper>
-    </ColumnWrapper>
-)
+                ))}
+            </RowWrapper>
+        </ColumnWrapper>
+    )
+}
 
 const ColumnWrapper = styled.div`
   display: flex;
