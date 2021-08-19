@@ -19,11 +19,11 @@ export const ProductsView: React.FunctionComponent<ProductsViewProps> = ({
     onSelect
 }) => {
     const { storeProducts } = useStore(useProductsStore)
-    const Translation = useTranslation()
+    const translation = useTranslation()
 
     return (
         <ColumnWrapper>
-            <Header text={Translation.tabs.products}/>
+            <Header text={translation.tabs.products}/>
             <RowWrapper>
                 {storeProducts
                     .filter(product => product !== '')

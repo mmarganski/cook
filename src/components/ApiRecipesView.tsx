@@ -17,7 +17,7 @@ export const ApiRecipesView: React.FunctionComponent<ApiRecipesViewProps> = ({
 }) => {
     const { fetchData, isLoading, hasError } = useFetch<Array<ApiResponseRecipe>>()
     const [recipes, setRecipes] = useState<Record<string, number>>({})
-    const Translation = useTranslation()
+    const translation = useTranslation()
 
     useEffect(() => {
         fetchData(url, onDataLoaded, onLoadingError)
@@ -39,19 +39,19 @@ export const ApiRecipesView: React.FunctionComponent<ApiRecipesViewProps> = ({
     const renderRecipes = () => {
         if (url === '') {
             return(
-                <Message text={Translation.messages.callToSelect}/>
+                <Message text={translation.messages.callToSelect}/>
             )
         }
 
         if (isLoading) {
             return(
-                <Message text={Translation.messages.loading}/>
+                <Message text={translation.messages.loading}/>
             )
         }
 
         if (hasError || !Object.entries(recipes).length) {
             return(
-                <Message text={Translation.messages.noMatch}/>
+                <Message text={translation.messages.noMatch}/>
             )
         }
 
@@ -68,7 +68,7 @@ export const ApiRecipesView: React.FunctionComponent<ApiRecipesViewProps> = ({
 
     return(
         <ColumnWrapper>
-            <Header text={Translation.tabs.products}/>
+            <Header text={translation.tabs.products}/>
             <RowWrapper>
                 {renderRecipes()}
             </RowWrapper>

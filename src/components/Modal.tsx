@@ -18,14 +18,14 @@ export const Modal: React.FunctionComponent<ModalProps> = ({
     const { fetchData, isLoading, hasError } = useFetch<ApiRecipeDetails>()
     const [instructions, setInstructions] = useState('')
     const [sourceUrl, setSourceUrl] = useState('')
-    const Translation = useTranslation()
+    const translation = useTranslation()
 
     useEffect(() => {
         fetchData(url, onDataLoaded, onLoadingError)
     }, [url])
 
     const onDataLoaded = (data: ApiRecipeDetails) => {
-        setInstructions(data.instructions || Translation.messages.notFound)
+        setInstructions(data.instructions || translation.messages.notFound)
         setSourceUrl(data.sourceUrl)
     }
 
@@ -36,13 +36,13 @@ export const Modal: React.FunctionComponent<ModalProps> = ({
     const renderRecipes = () => {
         if (isLoading) {
             return(
-                <Message text={Translation.messages.loading}/>
+                <Message text={translation.messages.loading}/>
             )
         }
 
         if (hasError) {
             return(
-                <Message text={Translation.messages.loadingFail}/>
+                <Message text={translation.messages.loadingFail}/>
             )
         }
 
@@ -60,7 +60,7 @@ export const Modal: React.FunctionComponent<ModalProps> = ({
                     href={sourceUrl}
                     target="_blank"
                 >
-                    {Translation.messages.recipeUrl}
+                    {translation.messages.recipeUrl}
                 </a>
             </Wrapper>
         </>

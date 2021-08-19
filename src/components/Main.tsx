@@ -21,7 +21,7 @@ const TabComponents = {
 }
 
 export const Main: React.FunctionComponent = () => {
-    const Translation = useTranslation()
+    const translation = useTranslation()
 
     return (
         <>
@@ -29,7 +29,7 @@ export const Main: React.FunctionComponent = () => {
             <Router>
                 <TabsBar
                     tabs={Object.keys(TabComponents)}
-                    translation={Translation.tabs}
+                    translation={translation.tabs}
                 />
                 <Switch>
                     {Object.entries(TabComponents).map(([tabName, tabComponent]) => (

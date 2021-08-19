@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 type TabsBarProps = {
     tabs: Array<string>,
-    translation: {[key: string]: string}
+    translation: Record<string, string>
 }
 
 export const TabsBar: React.FunctionComponent<TabsBarProps> = ({

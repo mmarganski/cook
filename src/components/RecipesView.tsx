@@ -9,11 +9,11 @@ type RecipesViewProps= {
 }
 
 export const RecipesView: React.FunctionComponent<RecipesViewProps> = ({ recipes }) => {
-    const Translation = useTranslation()
+    const translation = useTranslation()
 
     return (
         <ColumnWrapper>
-            <Header text={Translation.tabs.recipes}/>
+            <Header text={translation.tabs.recipes}/>
             <RowWrapper>
                 {recipes.map((name, index) => (
                     <Item
