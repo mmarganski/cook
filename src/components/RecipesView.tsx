@@ -15,15 +15,13 @@ export const RecipesView: React.FunctionComponent<RecipesViewProps> = ({ recipes
         <ColumnWrapper>
             <Header text={Translation.tabs.recipes}/>
             <RowWrapper>
-                {recipes
-                    .map((name, index) => (
-                        <Item
-                            key={`${index}-${name}`}
-                            text={name}
-                            isWrapped={false}
-                        />
-                    ))
-                }
+                {recipes.map((name, index) => (
+                    <Item
+                        key={`${index}-${name}`}
+                        text={name}
+                        isWrapped={false}
+                    />
+                ))}
             </RowWrapper>
         </ColumnWrapper>
     )

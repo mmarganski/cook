@@ -17,7 +17,7 @@ export const TabsBar: React.FunctionComponent<TabsBarProps> = ({
                 to={`/${tab}`}
                 key={tab}
             >
-                {translation?.[tab]}
+                {translation?.[tab] || null}
             </StyledLink>
         ))}
     </Wrapper>

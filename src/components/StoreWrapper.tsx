@@ -1,11 +1,10 @@
 import React from 'react'
 import { Provider } from 'outstated'
 import { Main } from './Main'
-import { useProductsStore, useRecipesStore, useLanguageStore } from '../stores'
+import { storeGroup } from '../stores'
 
 export const StoreWrapper = () => (
-    <Provider stores={[useProductsStore, useRecipesStore, useLanguageStore]}>
+    <Provider stores={storeGroup}>
         <Main/>
     </Provider>
 )
-

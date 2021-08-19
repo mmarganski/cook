@@ -21,7 +21,7 @@ const TabComponents = {
 }
 
 export const Main: React.FunctionComponent = () => {
-    const Translation: {[key: string]: {[key: string]: string}} = useTranslation()
+    const Translation = useTranslation()
 
     return (
         <>
