@@ -13,7 +13,10 @@ export const LanguageSelector: React.FunctionComponent = () => {
             value={currentLanguage}
         >
             {Object.values(LanguageNames).map(language => (
-                <option key={language} value={language}>
+                <option
+                    key={language}
+                    value={language}
+                >
                     {language}
                 </option>
             ))}
