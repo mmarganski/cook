@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Header } from './Header'
-import { Tab, ApiResponseRecipe } from '../types'
 import { RecipeItem } from './RecipeItem'
-import { useFetch } from '../hooks'
 import { Message } from './Message'
+import { useFetch, useTranslation } from '../hooks'
+import { ApiResponseRecipe } from '../types'
 
 type ApiRecipesViewProps = {
     url: string,
@@ -17,6 +17,7 @@ export const ApiRecipesView: React.FunctionComponent<ApiRecipesViewProps> = ({
 }) => {
     const { fetchData, isLoading, hasError } = useFetch<Array<ApiResponseRecipe>>()
     const [recipes, setRecipes] = useState<Record<string, number>>({})
+    const Translation = useTranslation()
 
     useEffect(() => {
         fetchData(url, onDataLoaded, onLoadingError)
@@ -38,19 +39,19 @@ export const ApiRecipesView: React.FunctionComponent<ApiRecipesViewProps> = ({
     const renderRecipes = () => {
         if (url === '') {
             return(
-                <Message text="select product to find matching recipes"/>
+                <Message text={Translation.messages.callToSelect}/>
             )
         }
 
         if (isLoading) {
             return(
-                <Message text="loading"/>
+                <Message text={Translation.messages.loading}/>
             )
         }
 
         if (hasError || !Object.entries(recipes).length) {
             return(
-                <Message text="no matching recipes found"/>
+                <Message text={Translation.messages.noMatch}/>
             )
         }
 
@@ -67,7 +68,7 @@ export const ApiRecipesView: React.FunctionComponent<ApiRecipesViewProps> = ({
 
     return(
         <ColumnWrapper>
-            <Header text={Tab.Products}/>
+            <Header text={Translation.tabs.products}/>
             <RowWrapper>
                 {renderRecipes()}
             </RowWrapper>

@@ -1,8 +1,8 @@
-import { Main } from './components'
 import './App.css'
+import { StoreWrapper } from './components'
 
 export const App = () => (
     <div className="App">
-        <Main/>
+        <StoreWrapper/>
     </div>
 )
